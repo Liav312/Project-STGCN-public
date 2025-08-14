@@ -26,7 +26,7 @@ default_hooks = dict(
 default_scope = 'mmaction'
 fp16 = dict(loss_scale='dynamic')
 launcher = 'none'
-load_from = 'work_dirs/ntu_new_last/best_acc_top1_epoch_15.pth'
+load_from = 'work_dirs/ntu_new_last_continue/epoch_55.pth'
 log_level = 'INFO'
 model = dict(
     backbone=dict(
@@ -159,4 +159,4 @@ visualizer = dict(
         dict(type='TensorboardVisBackend'),
     ])
 window_len = 50
-work_dir = './work_dirs/ntu_new_last_continue'
+work_dir = 'work_dirs/ntu_new_last_continue'
