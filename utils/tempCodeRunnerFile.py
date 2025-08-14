@@ -1,0 +1,18 @@
+_ANG_TRIPLETS = [
+    (ROW_MP15["L_Shoulder"], ROW_MP15["R_Shoulder"], ROW_MP15["L_Elbow"]),
+    (ROW_MP15["L_Shoulder"], ROW_MP15["L_Elbow"], ROW_MP15["L_Wrist"]),
+    (ROW_MP15["L_Elbow"],    ROW_MP15["L_Shoulder"], ROW_MP15["L_Hip"]),
+    (ROW_MP15["L_Shoulder"], ROW_MP15["L_Hip"], ROW_MP15["L_Knee"]),
+    (ROW_MP15["L_Hip"],      ROW_MP15["L_Knee"], ROW_MP15["L_Ankle"]),
+    (ROW_MP15["L_Knee"],     ROW_MP15["L_Ankle"], ROW_MP15["L_Foot"]),
+    (ROW_MP15["L_Knee"],     ROW_MP15["L_Hip"], ROW_MP15["R_Hip"]),
+    (ROW_MP15["L_Foot"],     ROW_MP15["L_Knee"], ROW_MP15["L_Shoulder"]),
+    (ROW_MP15["R_Shoulder"], ROW_MP15["L_Shoulder"], ROW_MP15["R_Elbow"]),
+    (ROW_MP15["R_Shoulder"], ROW_MP15["R_Elbow"], ROW_MP15["R_Wrist"]),
+    (ROW_MP15["R_Elbow"],    ROW_MP15["R_Shoulder"], ROW_MP15["R_Hip"]),
+    (ROW_MP15["R_Shoulder"], ROW_MP15["R_Hip"], ROW_MP15["R_Knee"]),
+    (ROW_MP15["R_Hip"],      ROW_MP15["R_Knee"], ROW_MP15["R_Ankle"]),
+    (ROW_MP15["R_Knee"],     ROW_MP15["R_Ankle"], ROW_MP15["R_Foot"]),
+    (ROW_MP15["R_Knee"],     ROW_MP15["R_Hip"], ROW_MP15["L_Hip"]),
+    (ROW_MP15["R_Foot"],     ROW_MP15["R_Knee"], ROW_MP15["R_Shoulder"]),
+]

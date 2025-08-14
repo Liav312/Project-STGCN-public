@@ -1,0 +1,261 @@
+2025/06/05 02:21:01 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.10.12 (main, Nov  6 2024, 20:22:13) [GCC 11.4.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 42
+    GPU 0: NVIDIA GeForce RTX 4060 Laptop GPU
+    CUDA_HOME: /usr/local/cuda
+    NVCC: Cuda compilation tools, release 11.8, V11.8.89
+    GCC: x86_64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+    PyTorch: 2.1.2+cu118
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.7
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-invalid-partial-specialization -Wno-unused-private-field -Wno-aligned-allocation-unavailable -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=ON, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2+cu118
+    OpenCV: 4.11.0
+    MMEngine: 0.10.4
+
+Runtime environment:
+    dist_cfg: {'backend': 'nccl'}
+    seed: 42
+    deterministic: True
+    diff_rank_seed: False
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2025/06/05 02:21:01 - mmengine - INFO - Config:
+ann_file_test = 'data/split/suemd-markless/suemd_test_windows.pkl'
+ann_file_train = 'data/split/suemd-markless/suemd_train_windows.pkl'
+ann_file_val = 'data/split/suemd-markless/suemd_val_windows.pkl'
+common_dataset_cfg = dict(type='PoseDatasetTwoView', window=50)
+custom_hooks = []
+custom_imports = dict(
+    allow_failed_imports=False,
+    imports=[
+        'mmaction.models.recognizers.contrastive_recognizer',
+        'graph_angles16_kinematic',
+        'mmaction.datasets.pose_dataset_anglewin',
+        'mmaction.datasets.pose_dataset_twoview',
+        'mmaction.models.heads.projection_head',
+        'angle_transforms',
+        'prf1_metric',
+        'utils.freeze_first_block_hook',
+        'my_knn_metric',
+    ])
+dataset_type = 'PoseDatasetTwoView'
+default_hooks = dict(
+    checkpoint=dict(interval=5, max_keep_ckpts=3, type='CheckpointHook'),
+    logger=dict(interval=100, type='LoggerHook'))
+default_scope = 'mmaction'
+fp16 = dict(loss_scale='dynamic')
+init_cfg = dict(
+    checkpoint=
+    'work_dirs/ntu_angles16_onewin_finetune/best_acc_top1_epoch_18.pth',
+    ignore_keys=[
+        'cls_head.*',
+    ],
+    strict=True,
+    type='Pretrained')
+launcher = 'none'
+load_from = 'work_dirs/suemd_ntxent/epoch_35.pth'
+log_level = 'INFO'
+model = dict(
+    backbone=dict(
+        base_channels=64,
+        down_stages=[
+            5,
+        ],
+        graph_cfg=dict(layout='angles16_kinematic', mode='spatial'),
+        in_channels=1,
+        inflate_stages=[
+            5,
+            8,
+        ],
+        num_stages=10,
+        tcn_dropout=0.2,
+        type='STGCN'),
+    cls_head=dict(
+        in_channels=256,
+        normalize=True,
+        out_channels=128,
+        temperature=0.07,
+        type='ProjectionHead'),
+    type='ContrastiveRecognizerGCN')
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=1.0),
+    optimizer=dict(lr=0.0003, type='AdamW', weight_decay=0.0001),
+    paramwise_cfg=dict(
+        custom_keys=dict({
+            'backbone.data_bn': dict(lr_mult=0.1),
+            'backbone.gcn.0': dict(lr_mult=0.1)
+        })),
+    type='OptimWrapper')
+param_scheduler = [
+    dict(T_max=40, by_epoch=True, eta_min=1e-05, type='CosineAnnealingLR'),
+]
+randomness = dict(deterministic=True, diff_rank_seed=False, seed=42)
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=256,
+    dataset=dict(
+        ann_file='data/split/suemd-markless/suemd_test_windows.pkl',
+        lengths_pkl='data/split/suemd-markless/suemd_clip_lengths_test.pkl',
+        pipeline=[
+            dict(num_person=1, type='FormatGCNInput'),
+            dict(type='PackActionInputs'),
+        ],
+        split='test',
+        type='PoseDatasetTwoView',
+        window=50),
+    num_workers=20,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = [
+    dict(k=5, metric='cosine', type='my_knn_metric.KNNMetric'),
+]
+train_cfg = dict(max_epochs=40, type='EpochBasedTrainLoop', val_interval=1)
+train_dataloader = dict(
+    batch_size=256,
+    dataset=dict(
+        ann_file='data/split/suemd-markless/suemd_train_windows.pkl',
+        lengths_pkl='data/split/suemd-markless/suemd_clip_lengths_train.pkl',
+        pipeline=[
+            dict(type='ContrastiveAug'),
+            dict(num_person=1, type='FormatGCNInput'),
+            dict(type='PackActionInputs'),
+        ],
+        split='train',
+        type='PoseDatasetTwoView',
+        window=50),
+    num_workers=20,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=256,
+    dataset=dict(
+        ann_file='data/split/suemd-markless/suemd_val_windows.pkl',
+        lengths_pkl='data/split/suemd-markless/suemd_clip_lengths_val.pkl',
+        pipeline=[
+            dict(num_person=1, type='FormatGCNInput'),
+            dict(type='PackActionInputs'),
+        ],
+        split='val',
+        type='PoseDatasetTwoView',
+        window=50),
+    num_workers=20,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = [
+    dict(k=5, metric='cosine', type='my_knn_metric.KNNMetric'),
+]
+visualizer = dict(
+    type='ActionVisualizer',
+    vis_backends=[
+        dict(type='TensorboardVisBackend'),
+    ])
+window_len = 50
+work_dir = 'tmp_test_output'
+
+2025/06/05 02:21:03 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2025/06/05 02:21:03 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2025/06/05 02:21:03 - mmengine - INFO - Loaded 2,209 samples from data/split/suemd-markless/suemd_test_windows.pkl
+2025/06/05 02:21:03 - mmengine - WARNING - The prefix is not set in metric class KNNMetric.
+2025/06/05 02:21:03 - mmengine - INFO - Load checkpoint from work_dirs/suemd_ntxent/epoch_35.pth
+2025/06/05 02:21:10 - mmengine - INFO - Epoch(test) [9/9]    knn_acc: 0.9995  data_time: 0.2742  time: 0.7340
